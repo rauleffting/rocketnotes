@@ -1,7 +1,7 @@
 import { Container } from "./styles";
 
 export function Button({ title, loading, ...rest }){
-  return(
+  return (
     <Container 
       type="button"
       disabled={loading = false}
