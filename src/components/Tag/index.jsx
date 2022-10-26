@@ -1,8 +1,9 @@
 import { Container } from './styles';
 
-export function Tag({ title }) {
+/* O rest vai pasar vários dados, como a key ou o id. */
+export function Tag({ title, ...rest }) {
   return (
-    <Container>
+    <Container {...rest}>
       {title}
     </Container>
   )
