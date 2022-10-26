@@ -55,7 +55,7 @@ export const Search = styled.div`
 export const Content = styled.div`
   grid-area: content;
   padding: 0 64px;
-  overflow-y: scroll;
+  overflow-y: auto; /* se tiver muitas notas, ele criar um scroll */
 `;
 
 export const NewNote = styled.button`
