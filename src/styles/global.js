@@ -26,4 +26,10 @@ export default createGlobalStyle`
   button:hover, a:hover {
     filter: brightness(0.9);
   }
+
+  textarea:focus, input:focus, select:focus {
+    box-shadow: 0 0 0 0;
+    border: 0 none;
+    outline: 0;
+  } 
 `;
