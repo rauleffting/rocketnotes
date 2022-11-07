@@ -17,7 +17,7 @@ function AuthProvider({ children }){
 
       localStorage.setItem("@rocketnotes:token", JSON.stringify(token));
 
-      api.defaults.headers.authorization = `Bear ${token}`; /* cria um Bear token para todas as requisições do usuário */
+      api.defaults.headers.common['Authorization'] = `Bearer ${token}`; /* cria um Bear token para todas as requisições do usuário */
 
       setData({user, token});
 
@@ -38,12 +38,30 @@ function AuthProvider({ children }){
     setData({});
   }
 
+  async function updateProfile({ user }){
+    try {
+
+      await api.put("/users", user);
+      localStorage.setItem("@rocketnotes:user", JSON.stringify(user));
+
+      setData({ user, token: data.token });
+      alert("Perfil atualizado!");
+
+    } catch (error) {
+      if(error.response) {
+        alert(error.response.data.message);
+      } else {
+        alert("Não foi possível atualizar o perfil.")
+      }
+    }
+  }
+
   useEffect(() => {
     const token = localStorage.getItem("@rocketnotes:token");
     const user = localStorage.getItem("@rocketnotes:user");
 
     if(token && user) {
-      api.defaults.headers.authorization = `Bearer ${token}`;
+      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
       setData({
         token,
@@ -51,7 +69,6 @@ function AuthProvider({ children }){
       });
     }
   }, []) 
-
   /* 
     O vetor vazio significa que o useEffect vai agir somente uma vez - quando o componente for renderizado. 
     Se colocássemos 'data', por exemplo, ele agiria toda vez que o 'data' fosse atualizado.
@@ -61,6 +78,7 @@ function AuthProvider({ children }){
     <AuthContext.Provider value={{ 
       signIn,
       signOut, 
+      updateProfile,
       user:data.user, 
       }}>
       {children}
