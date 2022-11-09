@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { FiArrowLeft, FiUser, FiMail, FiLock, FiCamera } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { useAuth } from '../../hooks/auth';
 
@@ -8,8 +8,10 @@ import { api } from '../../services/api';
 import avatarPlaceHolder from '../../assets/avatar_placeholder.svg';
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
+import { ButtonText } from '../../components/ButtonText';
 
 import { Container, Form, Avatar } from "./styles";
+import { Navigate } from 'react-router-dom';
 
 export function Profile() {
   const { user, updateProfile } = useAuth();
@@ -21,16 +23,25 @@ export function Profile() {
 
   const avatarUrl = user.avatar ? `${api.defaults.baseURL}/files/${user.avatar}` : avatarPlaceHolder;
   const [avatar, setAvatar] = useState(avatarUrl);
-  const [avatarFile, setAvatarFile] = useState(null)
+  const [avatarFile, setAvatarFile] = useState(null);
+
+  const navigate = useNavigate();
+
+  function handleBack(){
+    navigate(-1);
+  }
 
   async function handleUpdate(){
-    const user = {
+    const updated = {
       name,
       email,
       password: passwordNew,
       old_password: passwordOld,
-    }
-    await updateProfile({ user, avatarFile });
+    };
+
+    const userUpdated = Object.assign(user, updated); /* ele atualizará o user com o updated */
+    
+    await updateProfile({ user: userUpdated, avatarFile });
   }
 
   function handleChangeAvatar(){
@@ -44,9 +55,9 @@ export function Profile() {
   return(
     <Container>
       <header>
-        <Link to="/">
+        <button type="button" onClick={handleBack}>
           <FiArrowLeft />
-        </Link>
+        </button>
       </header>
 
       <Form>
