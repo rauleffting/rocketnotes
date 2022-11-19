@@ -1,9 +1,16 @@
-# rocketnotes
+# :orange_book: Rocket Notes
 
-A website to create notes with links and tags.
+## Front-end / RocketNotes-API
 
-It has user authentication and API.
+A complete application with Reactjs and Node, in which the user can create notes with tags, search for them and update his profile.
 
-Feel free to test: https://rocketnotes94.netlify.app/
+Link to access the [Back-end](https://github.com/rauleffting/api_movies)!
 
-API Link: https://github.com/rauleffting/api
+Feel free to test: https://starmovies94.netlify.app/
+
+### Front-end technologies used:
+- React
+- Vite
+- HTML
+- CSS
+- JavaScript
